@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🍷 葡萄酒行业简报 · 第五期</title>
+  <style>
+    :root {
+      --wine: #8B1A1A;
+      --wine-light: #B03A2E;
+      --wine-pale: #F9F0EE;
+      --wine-border: #E8C9C4;
+      --gold: #C9A84C;
+      --text: #2C1810;
+      --muted: #6B4C44;
+      --bg: #FDF8F7;
+      --card: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .header {
+      background: linear-gradient(135deg, var(--wine) 0%, #4A0E0E 100%);
+      padding: 36px 24px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 0 C20 0 28 10 28 20 C28 28 22 34 20 34 C18 34 12 28 12 20 C12 10 20 0 20 0Z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9);
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.25);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .header h1 { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+    .header .tagline { color: rgba(255,255,255,0.75); font-size: 13px; margin-top: 6px; }
+    .header .date { color: var(--gold); font-size: 13px; margin-top: 10px; font-weight: 500; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 16px 48px; }
+    .section { margin-top: 28px; }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .section-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .icon-app { background: #FDE8E8; }
+    .icon-edu { background: #EAF3FF; }
+    .icon-news { background: #E8F5E9; }
+    .section-title { font-size: 16px; font-weight: 700; color: var(--text); }
+    .section-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--wine-border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      transition: box-shadow .2s;
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(139,26,26,0.08); }
+    .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .app-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--wine-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+      border: 1px solid var(--wine-border);
+    }
+    .card-meta { flex: 1; }
+    .card-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .card-version { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .tag {
+      display: inline-block;
+      padding: 2px 9px; border-radius: 20px;
+      font-size: 11px; font-weight: 600;
+    }
+    .tag-new    { background: #FEF3C7; color: #92400E; }
+    .tag-update { background: #DBEAFE; color: #1E40AF; }
+    .tag-stable { background: #D1FAE5; color: #065F46; }
+    .tag-hot    { background: #FCE7F3; color: #9D174D; }
+    .tag-warn   { background: #FEF9C3; color: #78350F; }
+    .tag-obit   { background: #F3E8FF; color: #6B21A8; }
+    .card-body { font-size: 14px; color: #3D2B25; line-height: 1.75; }
+    .card-body ul { padding-left: 18px; margin-top: 6px; }
+    .card-body li { margin-bottom: 4px; }
+    .card-footer {
+      margin-top: 12px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    }
+    .card-date { font-size: 12px; color: var(--muted); }
+    .card-link {
+      font-size: 12px; color: var(--wine); text-decoration: none;
+      font-weight: 600; border: 1px solid var(--wine-border);
+      padding: 4px 12px; border-radius: 20px; transition: all .2s;
+    }
+    .card-link:hover { background: var(--wine); color: #fff; }
+    .card-quiet { background: #FAFAFA; border-color: #E5E5E5; opacity: 0.85; }
+    .card-quiet .card-name { color: #777; }
+    .card-memorial {
+      border-color: #C4B5FD;
+      background: linear-gradient(135deg, #FAFAFA 0%, #F5F0FF 100%);
+    }
+    .footer {
+      margin-top: 40px; border-top: 1px solid var(--wine-border);
+      padding-top: 20px; text-align: center;
+      font-size: 12px; color: var(--muted); line-height: 2;
+    }
+    .footer strong { color: var(--wine); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">🍷 Wine Industry Briefing</div>
+  <h1>葡萄酒行业简报</h1>
+  <div class="tagline">App 动态 · 教育资讯 · 行业要闻</div>
+  <div class="date">📅 第五期 · 2026年3月25日（星期三）</div>
+</div>
+
+<div class="container">
+
+  <!-- MODULE 1: App Updates -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-app">📱</div>
+      <div>
+        <div class="section-title">核心 App 更新动态</div>
+        <div class="section-sub">Vivino · CellarTracker · Wine-Searcher · Delectable · Hello Vino · Sommo</div>
+      </div>
+    </div>
+
+    <!-- 全部无动态 -->
+    <div class="card card-quiet">
+      <div class="card-top">
+        <div class="app-icon">📱</div>
+        <div class="card-meta">
+          <div class="card-name">所有核心 App · 本期无新版本</div>
+          <div class="card-version">Wine-Searcher 最新更新为 3月20日；其余 App 无近期动态</div>
+        </div>
+        <span class="tag tag-stable">无近期动态</span>
+      </div>
+      <div class="card-body">
+        过去 72 小时内，所有监控 App 均无新版本发布或功能公告：
+        <ul>
+          <li>🔍 <strong>Wine-Searcher</strong>：本周暂无新更新（最新为 3月20日"就近搜索"功能）</li>
+          <li>🍇 <strong>Vivino</strong>：Android 维持 2026.11.0（3月13日），iOS 无新动态</li>
+          <li>🏚️ <strong>CellarTracker / Delectable / Hello Vino / Sommo</strong>：均无版本更新公告</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <span class="card-date">🕐 无近期更新</span>
+        <a class="card-link" href="https://www.wine-searcher.com/dept/whats+new" target="_blank">Wine-Searcher 更新页 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 2: Education -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-edu">🎓</div>
+      <div>
+        <div class="section-title">学习 & 教育工具资讯</div>
+        <div class="section-sub">WSET · VinoMemo · Curate · Sommo · CMS</div>
+      </div>
+    </div>
+
+    <!-- WSET 春糖大师班 + 春糖倒计时 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="app-icon">📚</div>
+        <div class="card-meta">
+          <div class="card-name">WSET 春糖大师班已落幕，第114届全国糖酒会明日（3月26日）盛大开幕</div>
+          <div class="card-version">3月23日已举行 · 明日春糖正式开幕</div>
+        </div>
+        <span class="tag tag-hot">🔥 明日开幕</span>
+      </div>
+      <div class="card-body">
+        WSET 成都春糖大师班<strong>前天（3月23日）</strong>在成都尼依格罗酒店顺利举行：
+        <ul>
+          <li>🇦🇺 南澳葡萄酒大师班、橡木桶风味大师班两场线下品鉴圆满完成</li>
+          <li>📡 线上6场直播（葡萄酒大师赵凤仪、侍酒师大师吕杨主讲）覆盖全国学员</li>
+        </ul>
+        <strong>第114届全国糖酒会（成都春糖）</strong>将于 <strong>明日（3月26日）</strong> 正式开幕，持续至28日。来自<strong>15个国家</strong>的进口酒商齐聚成都世纪城国际会展中心葡萄酒及烈酒展区，总面积达32万平方米，行业对接、渠道洽谈的黄金窗口正式开启。
+      </div>
+      <div class="card-footer">
+        <span class="card-date">📅 春糖：3月26-28日 · 成都</span>
+        <a class="card-link" href="https://www.wsetglobal.cn/" target="_blank">WSET中国官网 →</a>
+      </div>
+    </div>
+
+    <!-- VinoMemo / Sommo / Curate -->
+    <div class="card card-quiet">
+      <div class="card-top">
+        <div class="app-icon">📝</div>
+        <div class="card-meta">
+          <div class="card-name">VinoMemo / Sommo / Curate / CMS</div>
+          <div class="card-version">过去 72 小时无公开更新</div>
+        </div>
+        <span class="tag tag-stable">无动态</span>
+      </div>
+      <div class="card-body">
+        本期无上述工具的功能更新或重大公告。Sommo 持续迭代 WSET 各级别备考内容，是目前市场热度最高的葡萄酒学习 App。
+      </div>
+      <div class="card-footer">
+        <span class="card-date">🕐 无近期更新</span>
+        <a class="card-link" href="https://sommo.app/" target="_blank">Sommo官网 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 3: Industry News -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-news">📰</div>
+      <div>
+        <div class="section-title">葡萄酒行业重要新闻</div>
+        <div class="section-sub">产区 · 商业并购 · 市场趋势 · 人事</div>
+      </div>
+    </div>
+
+    <!-- 欧澳自贸协定签署 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="app-icon">🌐</div>
+        <div class="card-meta">
+          <div class="card-name">欧澳自贸协定3月24日签署：澳大利亚葡萄酒出口欧盟零关税，但"Prosecco"名称受限</div>
+          <div class="card-version">InDaily · Wine Industry Insight · 2026-03-24</div>
+        </div>
+        <span class="tag tag-new">重磅协定</span>
+      </div>
+      <div class="card-body">
+        欧盟与澳大利亚于3月24日正式完成《欧澳自由贸易协定》谈判签署，葡萄酒行业喜忧参半：
+        <ul>
+          <li>✅ <strong>利好</strong>：澳大利亚葡萄酒出口欧盟将享受<strong>零关税</strong>，每年可节省约 <strong>1,450万澳元</strong>关税成本（2025年出口欧盟约1.43亿澳元/7,600万升）</li>
+          <li>⚠️ <strong>限制</strong>：澳大利亚生产的"<strong>Prosecco</strong>"名称出口欧盟受地理标志保护限制，设 <strong>10年过渡期</strong>后全面禁止出口时使用——但国内市场（约2亿澳元规模）不受影响</li>
+          <li>🗣️ 澳大利亚葡萄与葡萄酒协会（Australian Grape and Wine）认为此为"保护主义措施"，将积极维权</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <span class="card-date">🕐 2026-03-24</span>
+        <a class="card-link" href="https://www.indailysa.com.au/news/business/2026/03/24/prosecco-deal-a-fizzer-in-historic-eu-trade-agreement" target="_blank">阅读原文 →</a>
+      </div>
+    </div>
+
+    <!-- 纳帕谷下行 + 分销整合 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="app-icon">📉</div>
+        <div class="card-meta">
+          <div class="card-name">纳帕谷市场持续下行：裁员、出口障碍与分销整合同步推进</div>
+          <div class="card-version">Wine Labs · 2026-03-24</div>
+        </div>
+        <span class="tag tag-warn">市场压力</span>
+      </div>
+      <div class="card-body">
+        Wine Labs 3月24日行业摘要综合120个来源，呈现加州葡萄酒市场当前严峻态势：
+        <ul>
+          <li>📉 <strong>纳帕谷下行</strong>：加州葡萄酒产业继续经历充满挑战的经济周期，多家酒庄宣布裁员，出口障碍（关税壁垒等）叠加内需疲软形成双重压力</li>
+          <li>🔀 <strong>分销整合加速</strong>：Ethica Wines 等平台正在太平洋地区积极推进分销网络整合，行业向更高效、规模化的渠道结构集中</li>
+          <li>🌱 <strong>风土品牌崛起</strong>：各大行业展会和会议凸显了"本地化、风土驱动"品牌的增长逻辑，精品小酒庄逆势寻求差异化突围</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <span class="card-date">🕐 2026-03-24</span>
+        <a class="card-link" href="https://winelabs.ai/insights/news_digest" target="_blank">Wine Labs 摘要 →</a>
+      </div>
+    </div>
+
+    <!-- 批发葡萄酒销售模式审视 -->
+    <div class="card">
+      <div class="card-top">
+        <div class="app-icon">🏪</div>
+        <div class="card-meta">
+          <div class="card-name">批发销售模式深度审视：谁适合做批发，谁该转型直销？</div>
+          <div class="card-version">Wine Industry Insight · 2026-03-24</div>
+        </div>
+        <span class="tag tag-update">渠道策略</span>
+      </div>
+      <div class="card-body">
+        Wine Industry Insight 3月24日深度分析了批发葡萄酒销售模式的适用边界，对中小酒庄渠道选择具有参考意义：
+        <ul>
+          <li>✅ <strong>适合批发的场景</strong>：规模较大、品牌知名度高、需要广泛铺货的酒庄；在目标市场没有时间或能力自建销售团队的生产商</li>
+          <li>❌ <strong>不适合批发的场景</strong>：利润空间薄、价格敏感度高的精品小批量酒款；重视品牌叙事和消费者直接关系的酒庄</li>
+          <li>🔄 背景：随着 DTC（直销）渠道成本下降，越来越多的中型酒庄正重新评估批发比例，探索"批发+DTC"混合模式</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <span class="card-date">🕐 2026-03-24</span>
+        <a class="card-link" href="https://www.wineindustryinsight.com/" target="_blank">Wine Industry Insight →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <strong>🍷 葡萄酒行业简报</strong> · 第五期 · 2026年3月25日<br>
+    信息来源：Wine Intelligence · Wine Labs · Wine Industry Insight · InDaily · WSET中国<br>
+    <span style="margin-top:6px;display:block;opacity:.65">本简报内容仅供参考 · 每日 09:00 自动推送 · 新闻时效 ≤ 72 小时</span>
+  </div>
+
+</div>
+</body>
+</html>
