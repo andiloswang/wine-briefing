@@ -3,337 +3,475 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🍷 葡萄酒行业简报 · 第七期</title>
+  <title>🍷 葡萄酒行业每日简报</title>
   <style>
     :root {
-      --wine: #8B1A1A;
-      --wine-light: #B03A2E;
-      --wine-pale: #F9F0EE;
-      --wine-border: #E8C9C4;
-      --gold: #C9A84C;
-      --text: #2C1810;
-      --muted: #6B4C44;
-      --bg: #FDF8F7;
-      --card: #FFFFFF;
+      --wine-deep: #6B1D2A;
+      --wine-mid:  #A0344A;
+      --wine-light:#D4607A;
+      --gold:      #C9A84C;
+      --gold-light:#F5E6C0;
+      --bg:        #FDF6F0;
+      --card-bg:   #FFFFFF;
+      --text:      #2C1A22;
+      --muted:     #7A5C68;
+      --border:    #E8D5CC;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.7;
+      min-height: 100vh;
     }
-    .header {
-      background: linear-gradient(135deg, var(--wine) 0%, #4A0E0E 100%);
-      padding: 36px 24px 28px;
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--wine-deep) 0%, #4A1020 50%, #2A0810 100%);
+      color: #fff;
+      padding: 40px 24px 32px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    .header::before {
+    header::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 0 C20 0 28 10 28 20 C28 28 22 34 20 34 C18 34 12 28 12 20 C12 10 20 0 20 0Z'/%3E%3C/g%3E%3C/svg%3E");
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/svg%3E") repeat;
+      opacity: .6;
     }
-    .header-badge {
+    header .emoji { font-size: 56px; display: block; margin-bottom: 10px; position: relative; }
+    header h1 { font-size: 28px; font-weight: 800; letter-spacing: 1px; position: relative; }
+    header .sub { font-size: 14px; color: rgba(255,255,255,.65); margin-top: 8px; position: relative; }
+    header .date-badge {
       display: inline-block;
-      background: rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.9);
-      font-size: 11px;
-      letter-spacing: 2px;
+      background: var(--gold);
+      color: #2C1A22;
+      font-size: 12px;
+      font-weight: 700;
       padding: 4px 14px;
       border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.25);
-      margin-bottom: 12px;
-      text-transform: uppercase;
+      margin-top: 14px;
+      position: relative;
     }
-    .header h1 { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
-    .header .tagline { color: rgba(255,255,255,0.75); font-size: 13px; margin-top: 6px; }
-    .header .date { color: var(--gold); font-size: 13px; margin-top: 10px; font-weight: 500; }
-    .container { max-width: 720px; margin: 0 auto; padding: 0 16px 48px; }
-    .section { margin-top: 28px; }
-    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .section-icon {
-      width: 36px; height: 36px; border-radius: 10px;
+
+    /* ── LAYOUT ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 32px 16px 60px; }
+
+    /* ── SUMMARY STRIP ── */
+    .summary-strip {
+      background: linear-gradient(135deg, var(--wine-mid), var(--wine-deep));
+      color: #fff;
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 30px; font-weight: 900; color: var(--gold-light); }
+    .stat-label { font-size: 12px; opacity: .8; margin-top: 4px; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--wine-deep);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-title .icon {
+      width: 32px; height: 32px;
+      background: var(--wine-mid);
+      color: #fff;
+      border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
+      font-size: 16px;
     }
-    .icon-app { background: #FDE8E8; }
-    .icon-edu { background: #EAF3FF; }
-    .icon-news { background: #E8F5E9; }
-    .section-title { font-size: 16px; font-weight: 700; color: var(--text); }
-    .section-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── CARD ── */
     .card {
-      background: var(--card);
-      border: 1px solid var(--wine-border);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 12px;
-      transition: box-shadow .2s;
+      padding: 20px 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(107,29,42,.06);
+      transition: transform .15s, box-shadow .15s;
     }
-    .card:hover { box-shadow: 0 4px 16px rgba(139,26,26,0.08); }
-    .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-    .app-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: var(--wine-pale);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
-      border: 1px solid var(--wine-border);
+    .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(107,29,42,.12); }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
     }
-    .card-meta { flex: 1; }
-    .card-name { font-size: 15px; font-weight: 700; color: var(--text); }
-    .card-version { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .card-title { font-size: 16px; font-weight: 700; color: var(--wine-deep); line-height: 1.4; }
     .tag {
-      display: inline-block;
-      padding: 2px 9px; border-radius: 20px;
-      font-size: 11px; font-weight: 600;
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
     }
-    .tag-new    { background: #FEF3C7; color: #92400E; }
-    .tag-update { background: #DBEAFE; color: #1E40AF; }
-    .tag-stable { background: #D1FAE5; color: #065F46; }
-    .tag-hot    { background: #FCE7F3; color: #9D174D; }
-    .tag-warn   { background: #FEF9C3; color: #78350F; }
-    .tag-record { background: #FEE2E2; color: #991B1B; }
-    .card-body { font-size: 14px; color: #3D2B25; line-height: 1.75; }
-    .card-body ul { padding-left: 18px; margin-top: 6px; }
+    .tag-red    { background: #FDE8EC; color: var(--wine-mid); }
+    .tag-gold   { background: var(--gold-light); color: #7A5000; }
+    .tag-green  { background: #E8F5E9; color: #2E7D32; }
+    .tag-blue   { background: #E3F2FD; color: #1565C0; }
+    .tag-purple { background: #F3E5F5; color: #7B1FA2; }
+    .tag-orange { background: #FFF3E0; color: #E65100; }
+
+    .card-body { font-size: 14px; color: #4A3340; line-height: 1.8; }
+    .card-body p { margin-bottom: 6px; }
+    .card-body ul { padding-left: 18px; }
     .card-body li { margin-bottom: 4px; }
-    .card-footer {
+    .card-source {
       margin-top: 12px;
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .card-date { font-size: 12px; color: var(--muted); }
-    .card-link {
-      font-size: 12px; color: var(--wine); text-decoration: none;
-      font-weight: 600; border: 1px solid var(--wine-border);
-      padding: 4px 12px; border-radius: 20px; transition: all .2s;
+    .card-source::before { content: "📌"; font-size: 11px; }
+
+    /* ── DATA TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 4px; }
+    .data-table th {
+      background: var(--wine-deep);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
     }
-    .card-link:hover { background: var(--wine); color: #fff; }
-    .card-quiet { background: #FAFAFA; border-color: #E5E5E5; opacity: 0.85; }
-    .card-quiet .card-name { color: #777; }
-    .footer {
-      margin-top: 40px; border-top: 1px solid var(--wine-border);
-      padding-top: 20px; text-align: center;
-      font-size: 12px; color: var(--muted); line-height: 2;
+    .data-table th:first-child { border-radius: 8px 0 0 0; }
+    .data-table th:last-child  { border-radius: 0 8px 0 0; }
+    .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: #faf4f6; }
+    .up   { color: #C62828; font-weight: 700; }
+    .down { color: #2E7D32; font-weight: 700; }
+
+    /* ── INSIGHT BOX ── */
+    .insight-box {
+      background: linear-gradient(135deg, #fff8f0, #fff0f3);
+      border-left: 4px solid var(--wine-mid);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      margin-bottom: 16px;
     }
-    .footer strong { color: var(--wine); }
+    .insight-box .title { font-weight: 700; color: var(--wine-deep); margin-bottom: 8px; font-size: 15px; }
+    .insight-box p { font-size: 14px; color: #4A3340; line-height: 1.8; }
+
+    /* ── TREND CHIPS ── */
+    .trend-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .chip {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--wine-deep);
+      font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── HIGHLIGHT BANNER ── */
+    .highlight-banner {
+      background: linear-gradient(135deg, #fff3cd, #ffe8a1);
+      border: 1.5px solid var(--gold);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #5A4000;
+    }
+    .highlight-banner .hb-icon { font-size: 24px; flex-shrink: 0; }
+    .highlight-banner strong { color: #3A2800; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    footer strong { color: var(--wine-mid); }
   </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-badge">🍷 Wine Industry Briefing</div>
-  <h1>葡萄酒行业简报</h1>
-  <div class="tagline">App 动态 · 教育资讯 · 行业要闻</div>
-  <div class="date">📅 第七期 · 2026年4月7日（星期二）</div>
-</div>
+<header>
+  <span class="emoji">🍷</span>
+  <h1>葡萄酒行业每日简报</h1>
+  <p class="sub">Wine Industry Daily Briefing</p>
+  <span class="date-badge">📅 2026年4月10日 · 星期五</span>
+</header>
 
 <div class="container">
 
-  <!-- MODULE 1: App Updates -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-icon icon-app">📱</div>
-      <div>
-        <div class="section-title">核心 App 更新动态</div>
-        <div class="section-sub">Vivino · CellarTracker · Wine-Searcher · Delectable · Hello Vino · Sommo</div>
-      </div>
-    </div>
+  <!-- 今日速览 -->
+  <div class="highlight-banner">
+    <div class="hb-icon">🔥</div>
+    <div><strong>今日焦点：</strong>Vinitaly 2026（4/12）明日开幕，97,000名专业观众即将汇聚维罗纳；欧美15%葡萄酒关税协议框架下出口压力持续；澳洲酒在华持续领跑但增速放缓；Crimson收购Raeburn酒庄3,520万美元扩充版图</div>
+  </div>
 
-    <div class="card card-quiet">
-      <div class="card-top">
-        <div class="app-icon">📱</div>
-        <div class="card-meta">
-          <div class="card-name">所有核心 App · 本期无新版本</div>
-          <div class="card-version">Wine-Searcher 最新更新仍为 3月20日；其余 App 72h内无新动态</div>
-        </div>
-        <span class="tag tag-stable">无近期动态</span>
-      </div>
-      <div class="card-body">
-        过去 72 小时内，所有监控 App 均无新版本发布或功能公告：
-        <ul>
-          <li>🔍 <strong>Wine-Searcher</strong>：最新功能仍为 3月20日上线的"就近搜索"（本地最优价格发现），本周无新更新</li>
-          <li>🍇 <strong>Vivino</strong>：Android 维持 2026.11.0，iOS 无新动态</li>
-          <li>🏚️ <strong>CellarTracker / Delectable / Hello Vino / Sommo</strong>：均无版本更新公告</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <span class="card-date">🕐 无近期更新</span>
-        <a class="card-link" href="https://www.wine-searcher.com/dept/whats+new" target="_blank">Wine-Searcher 更新页 →</a>
-      </div>
+  <!-- 核心数据快览 -->
+  <div class="summary-strip">
+    <div class="stat-item">
+      <div class="stat-num">15%</div>
+      <div class="stat-label">美欧葡萄酒关税协议税率（2025年7月起）</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">明日</div>
+      <div class="stat-label">Vinitaly 2026正式开幕（4月12日）</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">123%</div>
+      <div class="stat-label">澳洲葡萄酒对华出口增幅（2024/25财年）</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">$35.2M</div>
+      <div class="stat-label">Crimson收购Raeburn成交价</div>
     </div>
   </div>
 
-  <!-- MODULE 2: Education -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-icon icon-edu">🎓</div>
-      <div>
-        <div class="section-title">学习 & 教育工具资讯</div>
-        <div class="section-sub">WSET · VinoMemo · Curate · Sommo · CMS</div>
-      </div>
-    </div>
-
-    <!-- WSET 中国 -->
-    <div class="card">
-      <div class="card-top">
-        <div class="app-icon">📚</div>
-        <div class="card-meta">
-          <div class="card-name">WSET 中国：威士忌全球进化论专题上线，春糖大师班内容持续发酵</div>
-          <div class="card-version">WSET中国官网 · 2026年4月更新</div>
-        </div>
-        <span class="tag tag-update">内容更新</span>
-      </div>
-      <div class="card-body">
-        WSET 中国官网近期重点更新内容：
-        <ul>
-          <li>🥃 <strong>新专题上线</strong>：《威士忌正在接管烈酒酒桌？全球威士忌进化论来了！》——聚焦烈酒品类教育拓展方向，体现 WSET 课程从葡萄酒向烈酒的持续延伸</li>
-          <li>🍷 <strong>春糖大师班延伸内容</strong>：春糖期间（3月26-28日）WSET 六场直播资料已整理上线，可回顾高端葡萄酒品鉴要点</li>
-          <li>📖 <strong>推荐阅读</strong>：《为什么建议你冲 WSET 第三级葡萄酒认证？》——面向进阶学员的选课指导持续获得关注</li>
-          <li>🌐 中国区课程网络覆盖葡萄酒第一至四级（文凭）+ 烈酒/清酒/啤酒多品类认证</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <span class="card-date">📅 2026年4月</span>
-        <a class="card-link" href="https://www.wsetglobal.cn/" target="_blank">WSET 中国官网 →</a>
-      </div>
-    </div>
-
-    <!-- 其他教育工具 -->
-    <div class="card card-quiet">
-      <div class="card-top">
-        <div class="app-icon">📝</div>
-        <div class="card-meta">
-          <div class="card-name">VinoMemo / Sommo / Curate / CMS / Wine Educate</div>
-          <div class="card-version">过去 72 小时无公开更新</div>
-        </div>
-        <span class="tag tag-stable">无动态</span>
-      </div>
-      <div class="card-body">
-        本期无上述工具的功能更新或重大公告。Sommo 持续提供 WSET 各级别 AI 驱动备考内容，是目前市场热度最高的葡萄酒学习 App。
-      </div>
-      <div class="card-footer">
-        <span class="card-date">🕐 无近期更新</span>
-        <a class="card-link" href="https://sommo.app/" target="_blank">Sommo 官网 →</a>
-      </div>
-    </div>
+  <!-- ① 全球贸易与关税 -->
+  <div class="section-title">
+    <div class="icon">🌍</div>全球贸易与关税动态
   </div>
 
-  <!-- MODULE 3: Industry News -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-icon icon-news">📰</div>
-      <div>
-        <div class="section-title">葡萄酒行业重要新闻</div>
-        <div class="section-sub">产区 · 拍卖 · 市场趋势 · 贸易关税</div>
-      </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">美欧15%葡萄酒关税协议持续生效，欧洲酒商承压寻求替代市场</div>
+      <span class="tag tag-red">关税持续压力</span>
     </div>
-
-    <!-- DRC 拍卖新世界纪录 -->
-    <div class="card">
-      <div class="card-top">
-        <div class="app-icon">🏆</div>
-        <div class="card-meta">
-          <div class="card-name">史上最贵！1945年罗曼尼·康帝以 $812,500 打破单瓶葡萄酒拍卖世界纪录</div>
-          <div class="card-version">Acker La Paulée Auction · 2026-03-28 → Overproof/VinePair 报道 2026-03-31</div>
-        </div>
-        <span class="tag tag-record">🏅 世界纪录</span>
-      </div>
-      <div class="card-body">
-        3月28日，Acker 拍卖行年度 La Paulée 拍卖会上，一瓶<strong>1945年份罗曼尼·康帝（DRC）</strong>以 <strong>81.25万美元</strong>（约589万元人民币）成交，打破 2018年苏富比55.8万美元旧纪录，成为公开拍卖史上<strong>最昂贵的单瓶葡萄酒</strong>：
-        <ul>
-          <li>📜 <strong>1945年份的特殊意义</strong>：这是DRC在根瘤蚜虫病入侵导致老藤被迫重植前的最后一个年份，葡萄藤藤龄近百年，存量极稀</li>
-          <li>💵 本次 La Paulée 拍卖会总成交额高达 <strong>2500万美元</strong>，同时创下459项价格纪录，显示顶级勃艮第市场需求强劲</li>
-          <li>📈 与全球葡萄酒消费整体下滑形成鲜明对比——顶端收藏市场与大众消费市场呈现明显分化趋势</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <span class="card-date">🕐 2026-03-28 / 2026-03-31</span>
-        <a class="card-link" href="https://overproof.com/2026/03/31/1945-domaine-de-la-romanee-conti-breaks-record-for-most-expensive-bottle-of-wine-sold-at-auction/" target="_blank">阅读原文 →</a>
-      </div>
+    <div class="card-body">
+      <p>2025年7月27日美欧贸易框架协议确立对欧盟商品统一征收<strong>15%进口关税</strong>，涵盖葡萄酒和烈酒，该税率在2026年初持续有效。相较于此前多重关税叠加（最高达30%+），15%税率虽已是"妥协版本"，但仍给出口商带来明显成本压力。</p>
+      <table class="data-table" style="margin-top:12px;">
+        <thead>
+          <tr><th>产区/国家</th><th>对美关税</th><th>状态</th><th>市场影响</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>欧盟（法/意/西等）</td><td class="up">+15%</td><td>协议税率（持续）</td><td>出口额压缩，转移亚洲/非洲</td></tr>
+          <tr><td>澳大利亚</td><td class="up">+10%</td><td>基准关税</td><td>相对欧洲仍有价格优势</td></tr>
+          <tr><td>南非</td><td class="up">+30%</td><td>较高税率</td><td>对美出口受限，聚焦中国市场</td></tr>
+          <tr><td>美国本土</td><td class="down">0%</td><td>零关税</td><td>本土品牌竞争优势凸显</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;">背景：特朗普政府2026年1月曾威胁对法国葡萄酒加征200%关税作为谈判筹码，被业界认为更多是政治信号。欧洲酒商正积极借助Vinitaly 2026（明日开幕）重构亚洲、非洲替代市场布局。</p>
     </div>
-
-    <!-- 全球葡萄酒出口下降 -->
-    <div class="card">
-      <div class="card-top">
-        <div class="app-icon">📉</div>
-        <div class="card-meta">
-          <div class="card-name">2025年全球葡萄酒出口额降6.3%至337.7亿欧元，美国关税冲击意大利出口暴跌35%</div>
-          <div class="card-version">行业周报综合（搜狐/WBO）· 2026-04-06</div>
-        </div>
-        <span class="tag tag-warn">⚠️ 市场下行</span>
-      </div>
-      <div class="card-body">
-        最新行业数据显示全球葡萄酒贸易持续承压：
-        <ul>
-          <li>📊 <strong>出口整体下滑</strong>：2025年全球葡萄酒出口额为337.7亿欧元，同比降6.3%；出口量亦降4.7%，意大利、法国、西班牙传统出口国均受波及</li>
-          <li>🇺🇸 <strong>关税重创</strong>：美国加征关税导致意大利对美葡萄酒出口<strong>暴跌35%</strong>，学者通过追踪单瓶葡萄酒流通路径发现，关税成本最终主要由消费者承担（Wine Industry Insight 4月3日）</li>
-          <li>🇨🇳 <strong>中国市场</strong>：受反制关税影响，美国葡萄酒在华市场份额料将进一步萎缩；部分纽约酿酒商已通过收购美国本土酒窖库存来规避进口关税压力</li>
-          <li>🌏 各产区正积极开拓亚洲、南美新兴市场对冲欧美需求收缩</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <span class="card-date">🕐 2026-04-03 / 2026-04-06</span>
-        <a class="card-link" href="https://www.wineindustryinsight.com/" target="_blank">Wine Industry Insight →</a>
-      </div>
-    </div>
-
-    <!-- Meta 限酒政策 + Napa 市场下行 -->
-    <div class="card">
-      <div class="card-top">
-        <div class="app-icon">📱</div>
-        <div class="card-meta">
-          <div class="card-name">Meta 突袭式限制酒类内容 + 纳帕谷高端市场持续受压，行业营销迎双重挑战</div>
-          <div class="card-version">Wine Industry Insight · WineBusiness · 2026-04-06</div>
-        </div>
-        <span class="tag tag-hot">🔥 行业关注</span>
-      </div>
-      <div class="card-body">
-        本周葡萄酒营销与市场两大话题引发行业广泛讨论：
-        <ul>
-          <li>📵 <strong>Meta 限酒风波</strong>：Wine Industry Insight 4月6日头条《Faceblock：Meta 对酒类内容的意外打压》——Meta 自2026年1月起限制酒类企业账号的内容推广能力，数百万葡萄酒、啤酒及烈酒品牌账号受波及，行业营销渠道面临重大调整压力</li>
-          <li>🥂 <strong>外出饮酒持续减少</strong>：WineBusiness 引述分析：美国消费者外出饮酒频率大幅下滑，餐饮渠道葡萄酒销量萎缩，消费者加速转向性价比产品</li>
-          <li>🍷 <strong>纳帕谷高端市场承压</strong>：WineBusiness 深度报道《纳帕谷豪华葡萄酒市场的挤压》——高端价位带需求收缩与库存积压并存，酒庄正重新审视定价策略</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <span class="card-date">🕐 2026-04-06</span>
-        <a class="card-link" href="https://www.winebusiness.com/" target="_blank">WineBusiness →</a>
-      </div>
-    </div>
-
-    <!-- 波尔多重塑 + Purcari收购 -->
-    <div class="card">
-      <div class="card-top">
-        <div class="app-icon">🍾</div>
-        <div class="card-meta">
-          <div class="card-name">波尔多引入新白葡萄酒命名与无酒精产品重塑形象；Purcari 收购罗马尼亚酒庄扩张</div>
-          <div class="card-version">Wine Intelligence · Decanter · 2026-03-31 / 2026-04-04</div>
-        </div>
-        <span class="tag tag-new">产区动态</span>
-      </div>
-      <div class="card-body">
-        <ul>
-          <li>🇫🇷 <strong>波尔多转型</strong>（Wine Intelligence 3月31日）：波尔多正引入<strong>新白葡萄酒命名体系</strong>、推出更轻盈风格产品及无酒精创新系列，旨在吸引年轻消费者，应对全球最大红葡萄酒产区形象老化挑战。Decanter 4月3日同步发布波尔多2025年份期酒初步品鉴报告</li>
-          <li>🇷🇴 <strong>Purcari 收购扩张</strong>（Wine Intelligence 4月4日）：摩尔多瓦/罗马尼亚知名酒庄 Purcari 收购位于 Vrancea 的 CaraprodVin，进一步强化其在罗马尼亚的垂直整合平台，获取优质葡萄供应</li>
-          <li>🥂 <strong>Crémant de Bourgogne 50周年</strong>：勃艮第起泡酒2025年实现9%增长，高性价比优质起泡酒需求在全球持续上升</li>
-        </ul>
-      </div>
-      <div class="card-footer">
-        <span class="card-date">🕐 2026-03-31 / 2026-04-04</span>
-        <a class="card-link" href="https://wine-intelligence.com/blogs/wine-news-insights-wine-intelligence-trends-data-reports" target="_blank">Wine Intelligence →</a>
-      </div>
-    </div>
-
+    <div class="card-source">数据来源：Vinovest / Wine Intelligence / iContainers关税追踪器 · 2026-04</div>
   </div>
 
-  <div class="footer">
-    <strong>🍷 葡萄酒行业简报</strong> · 第七期 · 2026年4月7日<br>
-    信息来源：Wine Industry Insight · WineBusiness · Wine Intelligence · Decanter · Overproof/VinePair · WSET中国 · 搜狐/WBO<br>
-    <span style="margin-top:6px;display:block;opacity:.65">本简报内容仅供参考 · 每日 09:00 自动推送 · 新闻时效 ≤ 72 小时</span>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">南非葡萄酒零关税5月落地，Wine Intelligence预测市场份额升至4-5%</div>
+      <span class="tag tag-green">零关税利好</span>
+    </div>
+    <div class="card-body">
+      <p>中国对非洲53国零关税政策将于<strong>2026年5月1日</strong>正式落地，南非酒庄正密集备货。Diemersdal庄园（开普敦）已向中国进口商大幅增加发货，Rust en Vrede等酒庄亦制定专属中国市场扩张计划。</p>
+      <ul>
+        <li>南非葡萄酒零关税后相对法国/意大利产品拥有约<strong>14%价格优势</strong></li>
+        <li>Chenin Blanc、Pinotage等品种在中国市场差异化定位明确</li>
+        <li>对华出口量已连续3个月环比增长，贸易商提前备货积极</li>
+        <li>Wine Intelligence预测：南非在华市场份额2026年有望从约2%升至<strong>4-5%</strong></li>
+      </ul>
+    </div>
+    <div class="card-source">数据来源：FurtherAfrica / 新华社 / Wine Intelligence · 2026-04-07</div>
+  </div>
+
+  <!-- ② 展会动态 -->
+  <div class="section-title">
+    <div class="icon">🎪</div>展会与产业活动
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Vinitaly 2026明日开幕：97,000名专业观众，NoLo低醇展区全球首设</div>
+      <span class="tag tag-purple">展会倒计时</span>
+    </div>
+    <div class="card-body">
+      <p>第58届 Vinitaly（4月12-15日，维罗纳展览中心）将于<strong>明日（4月12日）</strong>正式揭幕。主题"<em>Italian Wine Strikes Back</em>"——意大利葡萄酒在关税逆风下以文化与质量输出反击。</p>
+      <ul>
+        <li><strong>规模创纪录：</strong>4,000家展商（国际展商占7%），18个展厅（总面积10万平方米）</li>
+        <li><strong>参观者：</strong>预计97,000名专业人士，其中33%来自130个国家（较2024年+7%），美国、德国、英国买家显著增加</li>
+        <li><strong>全新展区【NoLo – Vinitaly Experience】：</strong>系统性整合无酒精/低酒精饮品，含独立产业链展示——这是Vinitaly历史上首次专设低醇展区</li>
+        <li><strong>全新展区【Xcellent Spirits】：</strong>烈酒展区首次亮相，促进葡萄酒与烈酒行业交流</li>
+        <li><strong>数字化升级：</strong>Vinitaly Plus APP支持展商直接预约买家会谈（双向B2B匹配）</li>
+        <li><strong>意大利葡萄酒宏观数据：</strong>2025年预计产量4,740万百升，出口额77亿欧元（-3.7%，受美国关税影响）</li>
+      </ul>
+    </div>
+    <div class="card-source">数据来源：Gambero Rosso / Vinitaly.com / WineNews.it · 2026-04-09</div>
+  </div>
+
+  <!-- ③ 中国市场动态 -->
+  <div class="section-title">
+    <div class="icon">🇨🇳</div>中国市场动态
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">澳大利亚葡萄酒对华出口增幅123%，但重新夺回市场须突破结构性制约</div>
+      <span class="tag tag-blue">市场数据</span>
+    </div>
+    <div class="card-body">
+      <p>根据Wine Australia 2026年3月发布的《中国市场洞察报告》：截至2025年6月的财年，澳大利亚对华葡萄酒出口额同比激增<strong>123%</strong>至8.93亿澳元，重新登顶中国市场最大供应国。然而"补库存"反弹已于2025年下半年消退，结构性挑战依然严峻。</p>
+      <table class="data-table" style="margin-top:12px;">
+        <thead>
+          <tr><th>指标</th><th>数据</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>对华出口额（2024/25财年）</td><td class="up">8.93亿澳元（+123%）</td><td>关税取消后补库存驱动</td></tr>
+          <tr><td>出口量</td><td>约8,500万升</td><td>仅为2018年峰值的50%</td></tr>
+          <tr><td>中国市场占澳洲全球出口</td><td>36%</td><td>第一大出口目的地</td></tr>
+          <tr><td>中国跨境电商渠道</td><td class="up">+89%（2025年上半年）</td><td>数字化渠道成新增长极</td></tr>
+          <tr><td>中国葡萄酒市场总规模</td><td class="down">约2019年的1/3</td><td>结构性萎缩，非周期性</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;">Wine Australia指出，中国市场消费场景已从正式商务宴请转向随意/目的性场合，<strong>商务宴请用酒量已缩减一半</strong>。澳洲酒商必须适应消费分级趋势：高端产品有增长空间，大众市场收缩明显。</p>
+    </div>
+    <div class="card-source">数据来源：Wine Australia / 新浪财经 · 2026-03-31 / 2025-08-04</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">中国进口葡萄酒深度调整：消费重置、数字化提速、Z世代重塑购买逻辑</div>
+      <span class="tag tag-blue">市场深度</span>
+    </div>
+    <div class="card-body">
+      <p>中研普华2026年4月最新报告与Wine Australia报告一致确认：中国葡萄酒市场正处于<strong>"重置"阶段</strong>，从野蛮增长走向精耕细作，从规模扩张走向价值深耕。</p>
+      <ul>
+        <li><strong>渠道结构：</strong>线上（抖音、小红书、私域电商）占比超40%；跨境电商2025H1同比+89%</li>
+        <li><strong>消费群体变化：</strong>Z世代+千禧一代占消费主体60%+，女性消费者占45%</li>
+        <li><strong>饮用习惯：</strong>偶尔饮用者比例升至61%，日常饮用者结构性下降至39%</li>
+        <li><strong>低醇化：</strong>无醇/低醇葡萄酒需求年增速>30%，中国市场增势尤为突出</li>
+        <li><strong>竞争格局：</strong>澳洲保持份额领先，南非借零关税加速布局，法/意名庄守住高端</li>
+      </ul>
+    </div>
+    <div class="card-source">数据来源：中研普华产业研究院 / Wine Australia · 2026-04</div>
+  </div>
+
+  <!-- ④ 行业整合与资本动向 -->
+  <div class="section-title">
+    <div class="icon">💼</div>行业整合与资本动向
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Crimson Wine Group以3,520万美元收购Raeburn，索诺玛精品酒庄整合加速</div>
+      <span class="tag tag-orange">并购整合</span>
+    </div>
+    <div class="card-body">
+      <p>美国上市酒业集团 <strong>Crimson Wine Group</strong> 于2026年2月完成从 <strong>Purple Brands</strong> 手中收购 <strong>Raeburn Wine Brand</strong>（加州索诺玛产区），成交价<strong>3,520万美元</strong>，包含品牌知识产权、库存资产及客户名单。这是继Korbel收购Kenwood之后，索诺玛产区又一起值得关注的精品品牌整合案例。</p>
+      <ul>
+        <li>Raeburn以黑皮诺和霞多丽闻名，在美国精品酒市场有较高知名度</li>
+        <li>Crimson旗下已拥有Pine Ridge、Seghesio等多个知名加州品牌，此次收购强化了索诺玛布局</li>
+        <li>在关税压力下，美国本土精品品牌加速整合，大型集团"吸并"知名小品牌的趋势持续</li>
+      </ul>
+    </div>
+    <div class="card-source">数据来源：Crimson Wine Group / Wine Labs / TipRanks · 2026-02-09</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Gallo Four Roses收购案：Shanken深度访谈揭示整合战略与未来潜力</div>
+      <span class="tag tag-orange">战略深读</span>
+    </div>
+    <div class="card-body">
+      <p>E&J Gallo完成对Four Roses波本威士忌（7.75亿美元）收购一周后，Shanken News Daily独家访谈了Gallo首席执行官 <strong>Britt West</strong>，深度揭示整合逻辑：Gallo正在从"葡萄酒公司"向"全品类烈酒公司"战略转型。</p>
+      <ul>
+        <li>Gallo将Four Roses定位为"精品烈酒旗舰品牌"，利用其全国分销网络为Four Roses打开更多州级市场</li>
+        <li>Four Roses在日本和韩国市场有极强的品牌号召力，契合Gallo亚洲扩张战略</li>
+        <li>此次收购意味着大型葡萄酒集团"去葡萄酒化"战略进入实质推进阶段，未来可能出售更多核心葡萄酒资产</li>
+        <li>业界关注：Gallo下一步是否会剥离部分传统葡萄酒品牌，专注高增长的烈酒/即饮赛道</li>
+      </ul>
+    </div>
+    <div class="card-source">数据来源：Shanken News Daily · 2026-04-09</div>
+  </div>
+
+  <!-- ⑤ 全球行业趋势 -->
+  <div class="section-title">
+    <div class="icon">📈</div>全球行业趋势
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">OIV数据：2025年全球葡萄酒产量小幅回升至2.32亿百升，意大利连续蝉联第一</div>
+      <span class="tag tag-gold">产量数据</span>
+    </div>
+    <div class="card-body">
+      <div class="trend-chips">
+        <div class="chip">🇮🇹 意大利 4,730万百升</div>
+        <div class="chip">🇫🇷 法国 3,590万百升</div>
+        <div class="chip">🇪🇸 西班牙 2,940万百升</div>
+        <div class="chip">🇦🇺 澳洲 重返第五</div>
+      </div>
+      <p style="margin-top:14px;">国际葡萄与葡萄酒组织（OIV）2025年11月发布初步估算：2025年全球葡萄酒产量约<strong>2.32亿百升</strong>，较2024年历史低产<strong>回升约3%</strong>，但仍比5年平均水平低7%。意大利（4,730万百升）连续蝉联全球第一，澳大利亚从上一年弱势中恢复，重回第五名。OIV将于2026年Q2发布2025年最终数据。市场总体趋于供需平衡，但全球消费需求下降与贸易不确定性依然压制行业信心。</p>
+    </div>
+    <div class="card-source">数据来源：OIV / Wein.plus · 2025-11-12</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">2026年葡萄酒消费六大关键趋势：低醇化、数字化、可持续、Z世代"去品牌化"</div>
+      <span class="tag tag-purple">趋势深度</span>
+    </div>
+    <div class="card-body">
+      <div class="trend-chips">
+        <div class="chip">🍃 低醇/无醇化 +30%</div>
+        <div class="chip">📱 内容电商驱动</div>
+        <div class="chip">🌱 可持续认证</div>
+        <div class="chip">🧬 Z世代去品牌化</div>
+        <div class="chip">🌍 小众产区崛起</div>
+        <div class="chip">🤖 AI推荐+区块链溯源</div>
+      </div>
+      <p style="margin-top:14px;">综合Wine Intelligence、Vinitaly等多方数据，2026年葡萄酒行业最值得关注的结构性变化：①<strong>NoLo化</strong>——Vinitaly首设NoLo独立展区印证主流化；②<strong>数字体验</strong>——Vinitaly Plus双向B2B、AR品鉴成标配；③<strong>可持续/有机</strong>——消费者认证需求持续升温；④Z世代更注重视觉设计与品牌故事，传统产区信息重要性降低；⑤格鲁吉亚、南非等小众产区借零关税和差异化叙事持续突围。</p>
+    </div>
+    <div class="card-source">数据来源：Wine Intelligence / Gambero Rosso / 中研普华产业研究院 · 2026</div>
+  </div>
+
+  <!-- ⑥ 分析师洞察 -->
+  <div class="section-title">
+    <div class="icon">💡</div>分析师洞察
+  </div>
+
+  <div class="insight-box">
+    <div class="title">🔑 今日核心判断</div>
+    <p>今日最大事件是<strong>Vinitaly 2026明日（4/12）正式开幕</strong>。在欧洲葡萄酒面临美国15%关税、意大利对美出口2025年下降3.7%的背景下，此次展会被赋予"反击"意涵。重点观察：①意大利酒商如何向美国以外的亚洲/非洲买家重构分销网络；②NoLo专区是否带动低醇化趋势的产业落地；③国际买家（尤其中国、日本、韩国采购商）的实际询单热度。全球酒业整合叙事进入新篇章——Gallo向全品类烈酒转型的战略信号已经发出，行业观察者普遍预期未来12-18个月将有更多葡萄酒品牌被出售或整合。</p>
+  </div>
+
+  <div class="insight-box">
+    <div class="title">🇨🇳 中国市场研判</div>
+    <p>澳大利亚以123%增幅重回中国市场榜首，但补库存周期已于2025年H2结束，当前面临"后反弹时代"的真正考验。南非零关税（5月起）将在中低价位赛道制造压力，格鲁吉亚等小众产区也在加速布局。真正的竞争壁垒正在转向：<strong>数字化运营（跨境电商+私域）、符合Z世代审美的品牌叙事，以及低醇产品线的丰富度</strong>。对于进口商而言，单纯押注"原产地标签"已不足够，精细化运营能力决定下半程胜负。</p>
+  </div>
+
+  <div class="insight-box">
+    <div class="title">⚠️ 风险提示</div>
+    <p>①美国关税政策仍存高度不确定性——特朗普200%关税威胁虽为谈判筹码，但政策骤变风险不可忽视；②Section 301调查针对欧盟/英国，结果可能带来新一轮加税；③中美贸易博弈中中国对美商品实施高额报复性关税，中美葡萄酒贸易通道持续封堵；④欧洲主产区气候风险——2025年意大利/西班牙降水异常，2026年病虫害压力尚待评估；⑤中国市场结构性萎缩（目前约为2019年的1/3）意味着整体市场规模短期难以大幅反弹，进口商需注意控制库存风险。</p>
   </div>
 
 </div>
+
+<footer>
+  <strong>🍷 葡萄酒行业每日简报</strong> &nbsp;|&nbsp; 自动生成于 2026-04-10 09:10 &nbsp;|&nbsp; 数据来源：Wine Australia · Vinitaly · Gambero Rosso · Wine Intelligence · OIV · 中研普华 · Wine Labs · iContainers
+</footer>
+
 </body>
 </html>
